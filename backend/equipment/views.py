@@ -11,7 +11,7 @@ from reportlab.pdfgen import canvas
 from .models import UploadHistory
 
 
-# ✅ CSV UPLOAD + ANALYTICS
+#CSV UPLOAD + ANALYTICS
 @api_view(['POST'])
 @parser_classes([MultiPartParser, FormParser])
 def upload_csv(request):
@@ -44,7 +44,7 @@ def upload_csv(request):
             "type_distribution": df['Type'].value_counts().to_dict()
         }
 
-        # ✅ SAVE TO DATABASE
+        #SAVE TO DATABASE
         UploadHistory.objects.create(
             total_equipment=summary["total_equipment"],
             avg_pressure=summary["avg_pressure"],
@@ -52,7 +52,7 @@ def upload_csv(request):
             type_distribution=summary["type_distribution"]
         )
 
-        # ✅ KEEP ONLY LAST 5 RECORDS
+        #KEEP ONLY LAST 5 RECORDS
         history_count = UploadHistory.objects.count()
 
         if history_count > 5:
@@ -64,7 +64,7 @@ def upload_csv(request):
         return Response(summary, status=status.HTTP_200_OK)
 
     except Exception as e:
-        print("REAL ERROR:", str(e))   # ⭐ CRITICAL LINE
+        print("REAL ERROR:", str(e))   
         return Response(
         {"error": str(e)},
         status=status.HTTP_400_BAD_REQUEST
