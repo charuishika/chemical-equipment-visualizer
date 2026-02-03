@@ -46,7 +46,6 @@ class EquipmentApp(QWidget):
         url = "http://127.0.0.1:8000/api/upload/"
 
         try:
-            # ⭐ VERY IMPORTANT → use WITH (auto closes file)
             with open(file_path, 'rb') as f:
 
                 response = requests.post(
@@ -55,7 +54,7 @@ class EquipmentApp(QWidget):
                     timeout=10
                 )
 
-            # ⭐ Show real error if backend fails
+    
             if response.status_code != 200:
                 QMessageBox.critical(
                     self,
@@ -89,7 +88,7 @@ class EquipmentApp(QWidget):
             )
             print(e)
 
-    # ⭐ CHART
+    #CHART
     def show_chart(self, distribution):
 
         labels = list(distribution.keys())
@@ -109,7 +108,7 @@ class EquipmentApp(QWidget):
         plt.show()
 
 
-# ⭐ APP START
+#APP START
 app = QApplication(sys.argv)
 window = EquipmentApp()
 window.show()
